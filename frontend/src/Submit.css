@@ -1,0 +1,78 @@
+.submit-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.pipeline-stats {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stat-value {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #f8fafc;
+}
+
+.stat-value.status-active {
+  color: #10b981;
+}
+
+.stat-value.status-idle {
+  color: #94a3b8;
+}
+
+/* Submit.css - Remove the :disabled styles */
+.submit-button {
+background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+color: white;
+border: none;
+padding: 0.75rem 1.5rem;
+border-radius: 8px;
+font-size: 0.875rem;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.2s ease;
+display: flex;
+align-items: center;
+gap: 0.5rem;
+box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3);
+}
+
+.submit-button:hover {
+transform: translateY(-2px);
+box-shadow: 0 6px 10px -1px rgba(59, 130, 246, 0.4);
+}
+
+.submit-button:active {
+transform: translateY(0);
+}
+
+.button-icon {
+font-size: 1rem;
+}
+
+.button-shortcut {
+font-size: 0.75rem;
+opacity: 0.7;
+margin-left: 0.25rem;
+}

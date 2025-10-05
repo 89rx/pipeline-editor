@@ -1,0 +1,73 @@
+
+.draggable-node {
+    cursor: grab;
+    padding: 0.75rem 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 8px;
+    background: #334155;
+    border: 1px solid #475569;
+    transition: all 0.2s ease;
+    user-select: none;
+  }
+  
+  .draggable-node:hover {
+    background: #475569;
+    border-color: #64748b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .draggable-node:active {
+    cursor: grabbing;
+  }
+  
+  .node-icon {
+    font-size: 1.25rem;
+  }
+  
+  .node-label {
+    color: #f8fafc;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-align: center;
+  }
+  
+  /* Specific node type colors */
+  .draggable-node-customInput {
+    background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+  }
+  
+  .draggable-node-customOutput {
+    background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+  }
+  
+  .draggable-node-llm {
+    background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%);
+  }
+  
+  .draggable-node-text {
+    background: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%);
+  }
+  
+  .draggable-node-math {
+    background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
+  }
+  
+  .draggable-node-filter {
+    background: linear-gradient(135deg, #db2777 0%, #ec4899 100%);
+  }
+  
+  .draggable-node-delay {
+    background: linear-gradient(135deg, #ca8a04 0%, #eab308 100%);
+  }
+  
+  .draggable-node-http {
+    background: linear-gradient(135deg, #4338ca 0%, #4f46e5 100%);
+  }
+  
+  .draggable-node-log {
+    background: linear-gradient(135deg, #57534e 0%, #78716c 100%);
+  }

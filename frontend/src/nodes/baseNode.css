@@ -1,0 +1,227 @@
+
+.base-node {
+  min-width: 240px;
+  min-height: 100px;
+  border: 2px solid;
+  border-radius: 12px;
+  background: #1e293b;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  z-index: 1; 
+}
+
+.base-node::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+}
+
+.base-node:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transform: translateY(-1px);
+}
+
+
+.base-node .react-flow__handle {
+  width: 20px !important; 
+  height: 20px !important; 
+  border: 3px solid #1e293b !important;
+  background: #3b82f6 !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4) !important;
+  z-index: 1000 !important;
+  transition: all 0.3s ease !important;
+}
+
+.base-node .react-flow__handle:hover {
+  background: #60a5fa !important;
+  
+  opacity: 0.7 !important; 
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5) !important;
+}
+
+.base-node .react-flow__handle-left {
+  left: -10px !important;
+}
+
+.base-node .react-flow__handle-right {
+  right: -10px !important;
+}
+
+/* handles glow when connectable */
+.base-node .react-flow__handle-connecting {
+  background: #10b981 !important;
+  border-color: #10b981 !important;
+  animation: pulse 1.5s infinite !important;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+.react-flow__node.selected .react-flow__handle {
+  border-color: #fbbf24; 
+}
+
+/* dotted line which moves */
+.react-flow__edge-path {
+  stroke-dasharray: 5, 5 !important;
+  animation: dashdraw 0.5s linear infinite !important;
+  stroke-width: 2 !important;
+}
+
+@keyframes dashdraw {
+  to {
+    stroke-dashoffset: -10;
+  }
+}
+
+/* Smoothstep connection line with dots */
+.react-flow__connectionline {
+  stroke-dasharray: 5, 5 !important;
+  animation: dashdraw 0.5s linear infinite !important;
+}
+
+/* Animated edges */
+.react-flow__edge.selected .react-flow__edge-path,
+.react-flow__edge.animated .react-flow__edge-path {
+  stroke-dasharray: 5, 5 !important;
+  animation: dashdraw 0.5s linear infinite !important;
+}
+
+.node-header {
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #334155;
+  color: #f8fafc;
+  flex-shrink: 0;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.node-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1;
+  min-height: 0;
+}
+
+.node-content label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.75rem;
+  gap: 0.375rem;
+  flex-shrink: 0;
+  color: #cbd5e1;
+  font-weight: 500;
+}
+
+.node-content input, 
+.node-content select, 
+.node-content textarea {
+  padding: 0.5rem;
+  border: 1px solid #475569;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-family: inherit;
+  box-sizing: border-box;
+  background: #334155;
+  color: #f8fafc;
+  transition: all 0.2s ease;
+}
+
+.node-content input:focus, 
+.node-content select:focus, 
+.node-content textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.node-content input::placeholder,
+.node-content textarea::placeholder {
+  color: #64748b;
+}
+
+.node-content textarea {
+  resize: none;
+  min-height: 80px;
+  flex: 1;
+  line-height: 1.4;
+}
+
+.textarea-container {
+  position: relative;
+  width: 100%;
+}
+
+.auto-expand-textarea {
+  width: 100%;
+  min-height: 80px;
+  max-height: 200px;
+  resize: none;
+  overflow-y: auto;
+  padding: 8px 12px;
+  border: 1px solid #475569;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-family: inherit;
+  line-height: 1.4;
+  background: #334155;
+  color: #f8fafc;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.auto-expand-textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.auto-expand-textarea::placeholder {
+  color: #64748b;
+}
+
+.node-blob {
+  display: inline-block;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  margin: 0 2px;
+  white-space: nowrap;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* node spec colors */
+.node-input { background-color: #ff6b6b; }
+.node-output { background-color: #4ecdc4; }
+.node-llm { background-color: #45b7d1; }
+.node-text { background-color: #96ceb4; }
+.node-filter { background-color: #ff9f43; }
+.node-math { background-color: #5f27cd; }
+.node-delay { background-color: #00d2d3; }
+.node-http { background-color: #ee5253; }
+.node-log { background-color: #10ac84; }

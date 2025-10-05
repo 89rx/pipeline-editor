@@ -1,0 +1,26 @@
+
+.toolbar-container {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.toolbar-category {
+  margin-bottom: 1.5rem;
+}
+
+.category-title {
+  color: #94a3b8;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 0.75rem 0;
+  padding: 0;
+}
+
+.nodes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
