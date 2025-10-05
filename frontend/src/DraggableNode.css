@@ -7,7 +7,7 @@
   gap: 0.75rem;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: all 0.3s ease; /* Reduced transition time */
+  transition: all 0.3s ease; 
   user-select: none;
   position: relative;
   overflow: hidden;
@@ -15,10 +15,10 @@
   box-shadow: 
     0 4px 20px rgba(0, 0, 0, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  transform: translateZ(0); /* Hardware acceleration */
+  transform: translateZ(0); 
 }
 
-/* Shiny overlay effect - only on hover */
+/*shiny*/
 .draggable-node::before {
   content: '';
   position: absolute;
@@ -34,7 +34,7 @@
   );
   transition: left 0.7s ease;
   z-index: 1;
-  pointer-events: none; /* Important: don't interfere with drag */
+  pointer-events: none; 
 }
 
 .draggable-node:hover::before {
@@ -49,12 +49,11 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
-/* Reset transforms during drag */
 .draggable-node:active,
 .draggable-node.dragging {
   cursor: grabbing;
-  transform: none !important; /* Remove all transforms during drag */
-  transition: none !important; /* Disable transitions during drag */
+  transform: none !important; 
+  transition: none !important; 
   box-shadow: 
     0 4px 20px rgba(0, 0, 0, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -62,7 +61,7 @@
 
 .draggable-node:active::before,
 .draggable-node.dragging::before {
-  display: none; /* Hide shiny effect during drag */
+  display: none; 
 }
 
 .node-icon {
@@ -78,7 +77,6 @@
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
 }
 
-/* Reset icon transform during drag */
 .draggable-node:active .node-icon,
 .draggable-node.dragging .node-icon {
   transform: none !important;
@@ -95,7 +93,6 @@
   z-index: 2;
 }
 
-/* Enhanced node type colors with gradients and shine */
 .draggable-node-customInput {
   background: linear-gradient(135deg, #059669 0%, #10b981 50%, #059669 100%);
 }

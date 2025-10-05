@@ -41,7 +41,7 @@ const selector = (state) => ({
 export const PipelineUI = () => {
     const reactFlowWrapper = useRef(null);
     const [reactFlowInstance, setReactFlowInstance] = useState(null);
-    const [isLocked, setIsLocked] = useState(false); // Track lock state
+    const [isLocked, setIsLocked] = useState(false); 
     const {
       nodes,
       edges,
@@ -61,7 +61,6 @@ export const PipelineUI = () => {
       (event) => {
         event.preventDefault();
   
-        // Check if the flow is locked
         if (isLocked) {
           console.log('🔒 Pipeline is locked - cannot add new nodes');
           return;
@@ -72,7 +71,6 @@ export const PipelineUI = () => {
           const appData = JSON.parse(event.dataTransfer.getData('application/reactflow'));
           const type = appData?.nodeType;
     
-          // check if the dropped element is valid
           if (typeof type === 'undefined' || !type) {
             return;
           }
@@ -93,7 +91,7 @@ export const PipelineUI = () => {
           addNode(newNode);
         }
       },
-      [reactFlowInstance, getNodeID, addNode, isLocked] // Added isLocked dependency
+      [reactFlowInstance, getNodeID, addNode, isLocked] 
   );
 
     const onDragOver = useCallback((event) => {
@@ -101,7 +99,6 @@ export const PipelineUI = () => {
         event.dataTransfer.dropEffect = 'move';
     }, []);
 
-    // Handle controls interaction to detect lock state
     const onControlsInteraction = useCallback((action) => {
       if (action === 'lock') {
         setIsLocked(true);
@@ -136,9 +133,9 @@ export const PipelineUI = () => {
             snapGrid={[gridSize, gridSize]}
             connectionLineType='smoothstep'
             style={{ background: '#0f172a' }}
-            elementsSelectable={!isLocked} // Disable node selection when locked
-            nodesConnectable={!isLocked} // Disable connections when locked
-            nodesDraggable={!isLocked} // Disable node dragging when locked
+            elementsSelectable={!isLocked} 
+            nodesConnectable={!isLocked} 
+            nodesDraggable={!isLocked} 
           >
             <Background 
               color="#334155" 

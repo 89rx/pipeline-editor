@@ -7,7 +7,7 @@
   overflow: hidden;
 }
 
-/* Animated background elements */
+
 .app-container::before {
   content: '';
   position: absolute;
@@ -128,7 +128,6 @@
   position: relative;
 }
 
-/* Canvas grid with animation */
 .app-canvas::before {
   content: '';
   position: absolute;
@@ -162,7 +161,7 @@
   min-height: 60px;
 }
 
-/* Footer accent line */
+
 .app-footer::before {
   content: '';
   position: absolute;
@@ -174,7 +173,7 @@
   background: linear-gradient(90deg, transparent, #3b82f6, transparent);
 }
 
-/* Header with interactive particles */
+/*particles*/
 .app-header {
   background: rgba(30, 41, 59, 0.8);
   backdrop-filter: blur(20px);

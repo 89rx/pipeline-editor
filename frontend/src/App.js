@@ -9,7 +9,7 @@ import './App.css';
 function App() {
   const { nodes, edges } = useStore();
 
-  // Move the actual analysis logic here
+ 
   const handleAnalyzePipeline = useCallback(async () => {
     if (nodes.length === 0) {
       alert('Please add at least one node to the pipeline before analyzing.');
@@ -57,12 +57,12 @@ function App() {
         `Make sure the backend server is running on http://localhost:8000`
       );
     }
-  }, [nodes, edges]); // Add dependencies
+  }, [nodes, edges]); 
 
-  // Global keyboard shortcut handler
+  
   useEffect(() => {
     const handleKeyDown = (event) => {
-      // Check for Ctrl+Enter (Windows/Linux) or Cmd+Enter (Mac)
+      
       if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
         event.preventDefault();
         console.log('⌨️ Global keyboard shortcut triggered: Ctrl+Enter / Cmd+Enter');
@@ -74,7 +74,7 @@ function App() {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [handleAnalyzePipeline]); // Now handleAnalyzePipeline is stable
+  }, [handleAnalyzePipeline]); 
 
   return (
     <div className="app-container">
