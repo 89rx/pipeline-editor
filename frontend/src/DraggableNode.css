@@ -1,73 +1,232 @@
-
 .draggable-node {
-    cursor: grab;
-    padding: 0.75rem 0.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    border-radius: 8px;
-    background: #334155;
-    border: 1px solid #475569;
-    transition: all 0.2s ease;
-    user-select: none;
-  }
-  
-  .draggable-node:hover {
-    background: #475569;
-    border-color: #64748b;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  }
-  
-  .draggable-node:active {
-    cursor: grabbing;
-  }
-  
-  .node-icon {
-    font-size: 1.25rem;
-  }
-  
-  .node-label {
-    color: #f8fafc;
-    font-size: 0.75rem;
-    font-weight: 500;
-    text-align: center;
-  }
-  
-  /* Specific node type colors */
-  .draggable-node-customInput {
-    background: linear-gradient(135deg, #059669 0%, #10b981 100%);
-  }
-  
-  .draggable-node-customOutput {
-    background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
-  }
-  
-  .draggable-node-llm {
-    background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%);
-  }
-  
-  .draggable-node-text {
-    background: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%);
-  }
-  
-  .draggable-node-math {
-    background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
-  }
-  
-  .draggable-node-filter {
-    background: linear-gradient(135deg, #db2777 0%, #ec4899 100%);
-  }
-  
-  .draggable-node-delay {
-    background: linear-gradient(135deg, #ca8a04 0%, #eab308 100%);
-  }
-  
-  .draggable-node-http {
-    background: linear-gradient(135deg, #4338ca 0%, #4f46e5 100%);
-  }
-  
-  .draggable-node-log {
-    background: linear-gradient(135deg, #57534e 0%, #78716c 100%);
-  }
+  cursor: grab;
+  padding: 1rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease; /* Reduced transition time */
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transform: translateZ(0); /* Hardware acceleration */
+}
+
+/* Shiny overlay effect - only on hover */
+.draggable-node::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  transition: left 0.7s ease;
+  z-index: 1;
+  pointer-events: none; /* Important: don't interfere with drag */
+}
+
+.draggable-node:hover::before {
+  left: 100%;
+}
+
+.draggable-node:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 
+    0 8px 40px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Reset transforms during drag */
+.draggable-node:active,
+.draggable-node.dragging {
+  cursor: grabbing;
+  transform: none !important; /* Remove all transforms during drag */
+  transition: none !important; /* Disable transitions during drag */
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.draggable-node:active::before,
+.draggable-node.dragging::before {
+  display: none; /* Hide shiny effect during drag */
+}
+
+.node-icon {
+  font-size: 1.5rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.draggable-node:hover .node-icon {
+  transform: scale(1.2) rotate(5deg);
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+}
+
+/* Reset icon transform during drag */
+.draggable-node:active .node-icon,
+.draggable-node.dragging .node-icon {
+  transform: none !important;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.node-label {
+  color: #f8fafc;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  position: relative;
+  z-index: 2;
+}
+
+/* Enhanced node type colors with gradients and shine */
+.draggable-node-customInput {
+  background: linear-gradient(135deg, #059669 0%, #10b981 50%, #059669 100%);
+}
+
+.draggable-node-customInput::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #34d399, transparent);
+  pointer-events: none;
+}
+
+.draggable-node-customOutput {
+  background: linear-gradient(135deg, #dc2626 0%, #ef4444 50%, #dc2626 100%);
+}
+
+.draggable-node-customOutput::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #fca5a5, transparent);
+  pointer-events: none;
+}
+
+.draggable-node-llm {
+  background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 50%, #7c3aed 100%);
+}
+
+.draggable-node-llm::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #a78bfa, transparent);
+  pointer-events: none;
+}
+
+.draggable-node-text {
+  background: linear-gradient(135deg, #0891b2 0%, #06b6d4 50%, #0891b2 100%);
+}
+
+.draggable-node-text::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #67e8f9, transparent);
+  pointer-events: none;
+}
+
+.draggable-node-math {
+  background: linear-gradient(135deg, #ea580c 0%, #f97316 50%, #ea580c 100%);
+}
+
+.draggable-node-math::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #fdba74, transparent);
+  pointer-events: none;
+}
+
+.draggable-node-filter {
+  background: linear-gradient(135deg, #db2777 0%, #ec4899 50%, #db2777 100%);
+}
+
+.draggable-node-filter::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #f9a8d4, transparent);
+  pointer-events: none;
+}
+
+.draggable-node-delay {
+  background: linear-gradient(135deg, #ca8a04 0%, #eab308 50%, #ca8a04 100%);
+}
+
+.draggable-node-delay::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #fde047, transparent);
+  pointer-events: none;
+}
+
+.draggable-node-http {
+  background: linear-gradient(135deg, #4338ca 0%, #4f46e5 50%, #4338ca 100%);
+}
+
+.draggable-node-http::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #818cf8, transparent);
+  pointer-events: none;
+}
+
+.draggable-node-log {
+  background: linear-gradient(135deg, #57534e 0%, #78716c 50%, #57534e 100%);
+}
+
+.draggable-node-log::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #d6d3d1, transparent);
+  pointer-events: none;
+}

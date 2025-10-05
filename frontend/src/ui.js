@@ -41,6 +41,7 @@ const selector = (state) => ({
 export const PipelineUI = () => {
     const reactFlowWrapper = useRef(null);
     const [reactFlowInstance, setReactFlowInstance] = useState(null);
+    const [isLocked, setIsLocked] = useState(false); // Track lock state
     const {
       nodes,
       edges,
@@ -60,6 +61,12 @@ export const PipelineUI = () => {
       (event) => {
         event.preventDefault();
   
+        // Check if the flow is locked
+        if (isLocked) {
+          console.log('🔒 Pipeline is locked - cannot add new nodes');
+          return;
+        }
+
         const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
         if (event?.dataTransfer?.getData('application/reactflow')) {
           const appData = JSON.parse(event.dataTransfer.getData('application/reactflow'));
@@ -86,7 +93,7 @@ export const PipelineUI = () => {
           addNode(newNode);
         }
       },
-      [reactFlowInstance, getNodeID, addNode]
+      [reactFlowInstance, getNodeID, addNode, isLocked] // Added isLocked dependency
   );
 
     const onDragOver = useCallback((event) => {
@@ -94,9 +101,19 @@ export const PipelineUI = () => {
         event.dataTransfer.dropEffect = 'move';
     }, []);
 
+    // Handle controls interaction to detect lock state
+    const onControlsInteraction = useCallback((action) => {
+      if (action === 'lock') {
+        setIsLocked(true);
+        console.log('🔒 Pipeline locked');
+      } else if (action === 'unlock') {
+        setIsLocked(false);
+        console.log('🔓 Pipeline unlocked');
+      }
+    }, []);
+
     return (
         <>
-        
           <div 
             ref={reactFlowWrapper} 
             style={{
@@ -105,7 +122,6 @@ export const PipelineUI = () => {
               pointerEvents: 'auto'
             }}
           >
-       
           <ReactFlow
             nodes={nodes}
             edges={edges}
@@ -120,6 +136,9 @@ export const PipelineUI = () => {
             snapGrid={[gridSize, gridSize]}
             connectionLineType='smoothstep'
             style={{ background: '#0f172a' }}
+            elementsSelectable={!isLocked} // Disable node selection when locked
+            nodesConnectable={!isLocked} // Disable connections when locked
+            nodesDraggable={!isLocked} // Disable node dragging when locked
           >
             <Background 
               color="#334155" 
@@ -135,6 +154,7 @@ export const PipelineUI = () => {
                 flexDirection: 'column',
                 gap: '4px',
               }}
+              onInteraction={onControlsInteraction}
             />
             <MiniMap 
               position="bottom-left"
