@@ -85,7 +85,7 @@ async def root():
     return {"message": "Backend is running!"}
 
 
-@app.post("/pipelines/parse")
+@app.post("/api/pipelines/parse")
 async def parse_pipeline(pipeline: PipelineRequest):
     # calculate basic stuff
     num_nodes = len(pipeline.nodes)
