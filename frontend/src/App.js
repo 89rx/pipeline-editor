@@ -24,7 +24,7 @@ function App() {
 
       console.log('Sending pipeline data:', pipelineData);
 
-      const response = await fetch('http://localhost:8000/pipelines/parse', {
+      const response = await fetch('/api/pipelines/parse', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -54,7 +54,7 @@ function App() {
       console.error('Error submitting pipeline:', error);
       alert(
         `Error connecting to backend:\n${error.message}\n\n` +
-        `Make sure the backend server is running on http://localhost:8000`
+        `Make sure the backend server is running on api`
       );
     }
   }, [nodes, edges]); 

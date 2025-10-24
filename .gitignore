@@ -19,6 +19,8 @@ venv.bak/
 *.pdf
 *.docx
 *.doc
+*.mov
+*.zip
 
 # Environment variables
 .env

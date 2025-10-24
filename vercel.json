@@ -1,0 +1,15 @@
+{
+    "version": 2,
+    "functions": {
+      "backend/main.py": {
+        "runtime": "python3.11"
+      }
+    },
+    "rewrites": [
+      {
+        "source": "/api/(.*)",
+        "destination": "/backend/main.py"
+      }
+    ]
+  }
+  
