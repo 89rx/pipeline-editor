@@ -1,4 +1,4 @@
-import os  
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -6,27 +6,21 @@ from typing import List, Dict, Any
 
 app = FastAPI()
 
-
-allowed_origin = os.environ.get("ALLOWED_ORIGIN", "http://localhost:3000")
-
-
+# For Vercel deployments, it is often safest to allow the specific 
+# frontend origin or use a wildcard during troubleshooting.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[allowed_origin],  
+    allow_origins=["*"],  # Allows all origins for debugging 405 errors
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["*"],  # Crucial for allowing POST and OPTIONS requests
     allow_headers=["*"],
 )
-
-
-
 
 class Node(BaseModel):
     id: str
     type: str
     position: Dict[str, float]
     data: Dict[str, Any]
-
 
 class Edge(BaseModel):
     id: str
@@ -35,16 +29,11 @@ class Edge(BaseModel):
     sourceHandle: str
     targetHandle: str
 
-
 class PipelineRequest(BaseModel):
     nodes: List[Node]
     edges: List[Edge]
 
-
 def is_dag(nodes: List[Node], edges: List[Edge]) -> bool:
-    """
-    Check if the graph is a Directed Acyclic Graph (DAG) using Kahn's algorithm
-    """
     if not edges:
         return True
 
@@ -79,15 +68,13 @@ def is_dag(nodes: List[Node], edges: List[Edge]) -> bool:
 
     return processed_count == len(nodes)
 
-
 @app.get("/")
 async def root():
     return {"message": "Backend is running!"}
 
-
+# Ensure the path exactly matches the fetch call in submit.js
 @app.post("/api/pipelines/parse")
 async def parse_pipeline(pipeline: PipelineRequest):
-    # calculate basic stuff
     num_nodes = len(pipeline.nodes)
     num_edges = len(pipeline.edges)
 
